@@ -17,10 +17,10 @@ router.get('/profile', isLoggedIn ,function (req, res, next) {
 
 //register 
 router.post('/register', function (req, res, next) {
-  var userData = new userModel({
+  const userData = new userModel({
     username: req.body.username,
     email: req.body.email,
-    fullName: req.body.fullName,
+    fullname: req.body.fullname,
   });
 
   userModel.register(userData, req.body.password)
@@ -47,7 +47,7 @@ router.get('/logout', function(req, res, next){
 
 //isLoggedIn
 function isLoggedIn(req, res, next){
-  if(req.isauthenticated()){
+  if(req.isAuthenticated()){
     return next()
   }
   res.redirect('/')

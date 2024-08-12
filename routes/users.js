@@ -29,9 +29,9 @@ const userSchema = new mongoose.Schema({
     unique: true,
     trim: true
   },
-  fullName: {
+  fullname: {
     type: String,
-    required: true,
+    required: true, 
   },
 }, {
   timestamps: true, // Automatically adds createdAt and updatedAt fields
