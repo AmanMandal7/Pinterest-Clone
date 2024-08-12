@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/dataAssociationDB');
+mongoose.connect('mongodb://localhost:27017/PinterestClone');
 
 const plm = require('passport-local-mongoose')
 
@@ -13,7 +13,6 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
   },
   posts: [{
     type: mongoose.Schema.Types.ObjectId,
