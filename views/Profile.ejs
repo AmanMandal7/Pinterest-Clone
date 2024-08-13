@@ -11,13 +11,13 @@
     <div class="box">
         <div class="profile">
           <div class="profile-picture">
-            <img src="https://images.unsplash.com/photo-1531469535976-c6fc3604014f?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Profile Picture">
+            <img src="../images/dp.jpg" alt="Profile Picture">
           </div>
-          <h2 class="name">name</h2>
-          <h3 class="username">@username</h3>
-          <p class="tagline">Tagline</p>
-          <p class="description">Description</p>
-          <a href="#" class="button">Profile Settings</a>
+          <h2 class="name"><%= user.fullname%></h2>
+          <h3 class="username">@<%= user.username%></h3>
+          <p class="tagline">Lorem ipsum dolor sit amet consectetur.</p>
+          <p class="description">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cupiditate distinctio ea delectus.</p>
+          <!-- <a href="#" class="button">Profile Settings</a> -->
           <a href="/logout" class="button">Logout</a>
         </div>
     </div>

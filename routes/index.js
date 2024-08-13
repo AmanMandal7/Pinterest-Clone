@@ -12,12 +12,15 @@ router.get('/', function (req, res, next) {
 
 //login route 
 router.get('/login', function (req, res, next) {
-  res.render('login')
+  res.render('login', {error: req.flash('error')});
 })
 
 //profile 
-router.get('/profile', isLoggedIn ,function (req, res, next) {
-  res.render('profile')
+router.get('/profile', isLoggedIn , async function (req, res, next) {
+  var user = await userModel.findOne({
+    username: req.session.passport.user
+  });
+  res.render('profile', {user})
 })
 
 //feed route 
@@ -44,7 +47,8 @@ router.post('/register', function (req, res, next) {
 //login 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/profile',
-  failureRedirect: '/login'
+  failureRedirect: '/login',
+  failureFlash: true
 }) ,function(req, res, next){})
 
 //logout

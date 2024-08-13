@@ -10,7 +10,7 @@ body {
 .container {
   background-color: white;
   width: 480px;
-  height: 550px;
+  min-height: 680px;
   position: absolute;
   margin: auto;
   top: 50%;
@@ -21,7 +21,7 @@ body {
 }
 
 .container.login {
-  height: 450px;
+  min-height: 450px;
 }
 
 .content {
@@ -163,4 +163,12 @@ hr {
 
 .logoutbtn {
   text-decoration: none;
+}
+
+/*--------------------------------------------error--------------------------------------------------*/
+.error {
+  font-weight: 500;
+  padding: 5px 0;
+  color: red;
+  text-transform: capitalize;
 }
