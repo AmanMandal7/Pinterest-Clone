@@ -7,12 +7,22 @@ const localStrategy = require('passport-local');
 passport.use(new localStrategy(userModel.authenticate()));
 
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('index');
 });
+
+//login route 
+router.get('/login', function (req, res, next) {
+  res.render('login')
+})
 
 //profile 
 router.get('/profile', isLoggedIn ,function (req, res, next) {
-  res.send('Welcome to your profile')
+  res.render('profile')
+})
+
+//feed route 
+router.get('/feed',function (req, res, next) {
+  res.render('feed')
 })
 
 //register 
@@ -34,14 +44,14 @@ router.post('/register', function (req, res, next) {
 //login 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/profile',
-  failureRedirect: '/'
+  failureRedirect: '/login'
 }) ,function(req, res, next){})
 
 //logout
 router.get('/logout', function(req, res, next){
   req.logout(function(err){
     if(err) return next(err);
-    res.redirect('/')
+    res.redirect('/login')
   })
 })
 
@@ -50,7 +60,7 @@ function isLoggedIn(req, res, next){
   if(req.isAuthenticated()){
     return next()
   }
-  res.redirect('/')
+  res.redirect('/login')
 }
 
 module.exports = router;

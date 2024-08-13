@@ -10,7 +10,7 @@ body {
 .container {
   background-color: white;
   width: 480px;
-  min-height: 650px;
+  height: 550px;
   position: absolute;
   margin: auto;
   top: 50%;
@@ -19,6 +19,11 @@ body {
   border-radius: 10px;
   box-shadow: 2px 2px 3px -1px rgba(0, 0, 0, 0.5);
 }
+
+.container.login {
+  height: 450px;
+}
+
 .content {
   /* background-color: red; */
   width: 65%;
@@ -81,7 +86,7 @@ body {
 }
 
 .int {
-  background-color: #f30d19;
+  background-color: #B60000;
   margin: 10px 0px;
   color: white;
   font-size: 16px;
@@ -89,7 +94,7 @@ body {
   cursor: pointer;
 }
 .int:hover{
-  background-color: #df0812;
+  background-color: #890e0e;
 }
 
 .or {
@@ -154,4 +159,8 @@ hr {
   padding: 11px 15px;
   background-color: rgb(241, 236, 236);
   border-radius: 20px;
+}
+
+.logoutbtn {
+  text-decoration: none;
 }
