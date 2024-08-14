@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const userModel = require('./users');
-const userPost = require('./posts')
+const postModel = require('./posts')
 const passport = require('passport');
 const upload = require('./multer')
 
@@ -14,28 +14,41 @@ router.get('/', function (req, res, next) {
 
 //login route 
 router.get('/login', function (req, res, next) {
-  res.render('login', {error: req.flash('error')});
+  res.render('login', { error: req.flash('error') });
 })
 
 //profile 
-router.get('/profile', isLoggedIn , async function (req, res, next) {
+router.get('/profile', isLoggedIn, async function (req, res, next) {
   var user = await userModel.findOne({
     username: req.session.passport.user
-  });
-  res.render('profile', {user})
+  })
+    .populate('posts');
+  res.render('profile', { user })
 });
 //route to upload files
-router.post('/upload', upload.single('file'), function(req, res){
-  if(!req.file){
+router.post('/upload', isLoggedIn, upload.single('file'), async function (req, res) {
+  if (!req.file) {
     return res.status(404).send('No files were uploaded.')
   }
-  res.send('File uploaded successfully!')
+
+  const user = await userModel.findOne({ username: req.session.passport.user });
+  const post = await postModel.create({
+    imagetext: req.body.imagetext,
+    image: req.file.filename,
+    user: user._id
+  });
+
+  user.posts.push(post._id);
+  await user.save();
+  res.redirect('/profile')
 })
 
+
 //feed route 
-router.get('/feed',function (req, res, next) {
+router.get('/feed', function (req, res, next) {
   res.render('feed')
 })
+
 
 //register 
 router.post('/register', function (req, res, next) {
@@ -47,9 +60,9 @@ router.post('/register', function (req, res, next) {
 
   userModel.register(userData, req.body.password)
     .then(function (registereduser) {
-        passport.authenticate('local')(req, res, function(){
-          res.redirect('/profile')
-        })
+      passport.authenticate('local')(req, res, function () {
+        res.redirect('/profile')
+      })
     })
 })
 
@@ -58,19 +71,19 @@ router.post('/login', passport.authenticate('local', {
   successRedirect: '/profile',
   failureRedirect: '/login',
   failureFlash: true
-}) ,function(req, res, next){})
+}), function (req, res, next) { })
 
 //logout
-router.get('/logout', function(req, res, next){
-  req.logout(function(err){
-    if(err) return next(err);
+router.get('/logout', function (req, res, next) {
+  req.logout(function (err) {
+    if (err) return next(err);
     res.redirect('/login')
   })
 })
 
 //isLoggedIn
-function isLoggedIn(req, res, next){
-  if(req.isAuthenticated()){
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
     return next()
   }
   res.redirect('/login')
