@@ -105,6 +105,12 @@ body {
 .card {
     width: 270px;
     height: 280px;
+    cursor: pointer;
+    transition: 0.3s all ease;
+}
+.card:hover {
+    scale: 1.02;
+    opacity: 90%;
 }
 
 .card img {
